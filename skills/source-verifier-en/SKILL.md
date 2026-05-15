@@ -1,9 +1,9 @@
 ---
-name: source-verifier
+name: source-verifier-en
 description: "Evaluates reliability of web information sources and answers user questions based on verified sources. Determines source type (official/academic/news/social_media/self_media/blog_forum), assesses domain authority, article quality, timeliness, and resolves source conflicts. Outputs structured citation usability reports and verified answers. USE FOR: source verification, check source reliability, verify web sources, fact-check sources, evaluate citation quality, source credibility assessment, inspect URL authority, cross-reference sources, answer questions with source verification. DO NOT USE FOR: general web search without source evaluation."
 license: MIT
 metadata:
-  author: source-verifier
+  author: qyw233
   version: "0.1"
 ---
 
