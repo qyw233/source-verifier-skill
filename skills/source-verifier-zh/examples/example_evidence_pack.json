@@ -1,0 +1,52 @@
+{
+  "question": "某视频生成模型是不是已经开源？",
+  "claims": [
+    {
+      "claim_id": "c1",
+      "claim_text": "该视频生成模型已经发布。",
+      "status": "supported",
+      "best_sources": [
+        {
+          "url": "https://official.example.com/blog/model-release",
+          "source_type": "official",
+          "source_reliability_score": 90,
+          "article_quality_score": 82,
+          "claim_support_label": "SUPPORTED",
+          "citation_usability": "highly_usable",
+          "evidence_summary": "官方公告明确说明该模型已经发布。",
+          "warnings": []
+        }
+      ],
+      "final_note": "可以确认模型已发布。"
+    },
+    {
+      "claim_id": "c2",
+      "claim_text": "该视频生成模型已经开源。",
+      "status": "insufficient_evidence",
+      "best_sources": [
+        {
+          "url": "https://news.example.com/ai/model-open-source",
+          "source_type": "news",
+          "source_reliability_score": 65,
+          "article_quality_score": 55,
+          "claim_support_label": "PARTIALLY_SUPPORTED",
+          "citation_usability": "use_with_caution",
+          "evidence_summary": "媒体称该模型开源，但没有提供官方仓库、权重页面或许可证链接。",
+          "warnings": [
+            "二手报道",
+            "缺少官方原始来源",
+            "不能单独证明开源"
+          ]
+        }
+      ],
+      "final_note": "目前不能确认开源状态，需要查找 GitHub、Hugging Face、LICENSE 或官方模型卡。"
+    }
+  ],
+  "blocked_sources": [
+    {
+      "url": "https://scraper.example.net/copied-news",
+      "reason": "疑似采集站，标题夸张，无作者和原始来源。"
+    }
+  ],
+  "answering_instruction": "最终回答只能确认该模型已发布；不要断言已经开源，除非找到官方仓库、权重或许可证。"
+}

@@ -1,0 +1,52 @@
+{
+  "question": "Has a certain video generation model been open-sourced?",
+  "claims": [
+    {
+      "claim_id": "c1",
+      "claim_text": "The video generation model has been released.",
+      "status": "supported",
+      "best_sources": [
+        {
+          "url": "https://official.example.com/blog/model-release",
+          "source_type": "official",
+          "source_reliability_score": 90,
+          "article_quality_score": 82,
+          "claim_support_label": "SUPPORTED",
+          "citation_usability": "highly_usable",
+          "evidence_summary": "The official announcement clearly states that the model has been released.",
+          "warnings": []
+        }
+      ],
+      "final_note": "It can be confirmed that the model has been released."
+    },
+    {
+      "claim_id": "c2",
+      "claim_text": "The video generation model has been open-sourced.",
+      "status": "insufficient_evidence",
+      "best_sources": [
+        {
+          "url": "https://news.example.com/ai/model-open-source",
+          "source_type": "news",
+          "source_reliability_score": 65,
+          "article_quality_score": 55,
+          "claim_support_label": "PARTIALLY_SUPPORTED",
+          "citation_usability": "use_with_caution",
+          "evidence_summary": "Media reports that the model is open-sourced, but no official repository, weights page, or license link is provided.",
+          "warnings": [
+            "Secondary report",
+            "Lacks official primary source",
+            "Cannot alone prove open-source status"
+          ]
+        }
+      ],
+      "final_note": "The open-source status cannot currently be confirmed. Need to check GitHub, Hugging Face, LICENSE, or official model card."
+    }
+  ],
+  "blocked_sources": [
+    {
+      "url": "https://scraper.example.net/copied-news",
+      "reason": "Suspected scraper site; exaggerated title, no author or original source."
+    }
+  ],
+  "answering_instruction": "The final answer can only confirm that the model has been released; do not assert open-source status unless an official repository, weights, or license is found."
+}

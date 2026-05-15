@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SourceReport",
+  "type": "object",
+  "description": "Single source evaluation report in the context of a user question. Field names remain in English for programmatic readability.",
+  "properties": {
+    "user_question": {
+      "type": "string",
+      "description": "The user's original question or topic"
+    },
+    "url": {
+      "type": "string",
+      "description": "Source URL"
+    },
+    "domain": {
+      "type": "string",
+      "description": "Main domain"
+    },
+    "title": {
+      "type": "string",
+      "description": "Page title"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "official",
+        "academic",
+        "news",
+        "professional_analysis",
+        "blog_forum",
+        "social_media",
+        "self_media",
+        "aggregator_or_scraper",
+        "suspicious",
+        "unknown"
+      ],
+      "description": "Main source type"
+    },
+    "secondary_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Secondary tags"
+    },
+    "relevance_to_question": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low",
+        "none"
+      ],
+      "description": "Relevance of page content to the user's question"
+    },
+    "source_reliability_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Overall source reliability score"
+    },
+    "article_quality_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Current article or page quality score"
+    },
+    "citation_usability": {
+      "type": "string",
+      "enum": [
+        "highly_usable",
+        "usable",
+        "use_with_caution",
+        "not_recommended",
+        "do_not_use"
+      ],
+      "description": "Citation usability (comprehensive consideration of reliability, article quality, and relevance)"
+    },
+    "freshness": {
+      "type": "string",
+      "enum": [
+        "fresh",
+        "possibly_outdated",
+        "outdated",
+        "timeless",
+        "unknown"
+      ],
+      "description": "Timeliness assessment"
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Reasons for comprehensive scoring and usability"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Risk warnings"
+    },
+    "recommended_action": {
+      "type": "string",
+      "description": "Recommended next action"
+    }
+  },
+  "required": [
+    "user_question",
+    "url",
+    "source_type",
+    "relevance_to_question",
+    "source_reliability_score",
+    "article_quality_score",
+    "citation_usability"
+  ]
+}

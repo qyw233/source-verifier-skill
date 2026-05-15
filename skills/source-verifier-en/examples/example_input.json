@@ -1,0 +1,35 @@
+{
+  "question": "Has a certain video generation model been open-sourced?",
+  "llm_answer": "Some reports indicate that the video generation model was released and open-sourced in April 2026.",
+  "claims": [
+    {
+      "claim_id": "c1",
+      "claim_text": "The video generation model has been released."
+    },
+    {
+      "claim_id": "c2",
+      "claim_text": "The video generation model has been open-sourced."
+    },
+    {
+      "claim_id": "c3",
+      "claim_text": "The video generation model was released in April 2026."
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://official.example.com/blog/model-release",
+      "title": "Model Release Announcement",
+      "snippet": "We have released a new video generation model."
+    },
+    {
+      "url": "https://news.example.com/ai/model-open-source",
+      "title": "Company Open-Sources Video Model",
+      "snippet": "Media reports that the model has been open-sourced."
+    },
+    {
+      "url": "https://scraper.example.net/copied-news",
+      "title": "Shocking! New Model Open-Sourced",
+      "snippet": "Content appears to be republished."
+    }
+  ]
+}

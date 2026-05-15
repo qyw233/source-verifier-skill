@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SourceReport",
+  "type": "object",
+  "description": "结合用户提问的单个来源信源评估报告。字段名保留英文，便于程序读取。",
+  "properties": {
+    "user_question": {
+      "type": "string",
+      "description": "用户原始的提问或主题"
+    },
+    "url": {
+      "type": "string",
+      "description": "来源 URL"
+    },
+    "domain": {
+      "type": "string",
+      "description": "主域名"
+    },
+    "title": {
+      "type": "string",
+      "description": "页面标题"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "official",
+        "academic",
+        "news",
+        "professional_analysis",
+        "blog_forum",
+        "social_media",
+        "self_media",
+        "aggregator_or_scraper",
+        "suspicious",
+        "unknown"
+      ],
+      "description": "来源主类型"
+    },
+    "secondary_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "次级标签"
+    },
+    "relevance_to_question": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low",
+        "none"
+      ],
+      "description": "页面内容与用户提问的相关程度"
+    },
+    "source_reliability_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "信源整体可靠性评分"
+    },
+    "article_quality_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "当前文章或页面质量评分"
+    },
+    "citation_usability": {
+      "type": "string",
+      "enum": [
+        "highly_usable",
+        "usable",
+        "use_with_caution",
+        "not_recommended",
+        "do_not_use"
+      ],
+      "description": "引用可用性（综合考虑可靠性、文章质量与相关度）"
+    },
+    "freshness": {
+      "type": "string",
+      "enum": [
+        "fresh",
+        "possibly_outdated",
+        "outdated",
+        "timeless",
+        "unknown"
+      ],
+      "description": "时效性判断"
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "综合评分及可用性原因"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "风险提示"
+    },
+    "recommended_action": {
+      "type": "string",
+      "description": "建议下一步动作"
+    }
+  },
+  "required": [
+    "user_question",
+    "url",
+    "source_type",
+    "relevance_to_question",
+    "source_reliability_score",
+    "article_quality_score",
+    "citation_usability"
+  ]
+}
