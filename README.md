@@ -74,7 +74,7 @@ Sources:
 
 ### Using with Search Tools
 
-A more common usage is to first have the model search or collect sources, then force整理 all sources and invoke this Skill for verification:
+A more common approach is to first let the model search or gather sources, then forcibly organize all the sources and invoke this Skill for verification, for example:
 
 ```text
 Help me find out whether a certain video generation model has been open-sourced.
@@ -128,7 +128,7 @@ Please add a financial investment domain rule to source-verifier.
 Requirements:
 - Trigger when involving stocks, funds, cryptocurrency, financial products
 - Prioritize regulatory announcements, exchange filings, listed company announcements, fund prospectuses
-- Self-media, community screenshots, signal-following content can only serve as线索
+- Self-media, community screenshots, signal-following content can only serve as clues
 - Automatically downgrade income promises, inside information, price predictions
 ```
 
@@ -149,9 +149,9 @@ Reputation lists only affect the trust baseline of the source entity; they do no
 This Skill has two output methods, each with different format requirements:
 
 1. **Default Mode: Source Evaluation Report + Answer**  
-   Suitable for scenarios where the user wants to verify sources and get a final answer. The report format is not strictly constrained; the model can自行 organize based on the user's question, number of sources, and conflict situations. Output should include:
+   Suitable for scenarios where the user wants to verify sources and get a final answer. The report format is not strictly constrained; the model may organize it based on the user's question, number of sources, and conflict situations. Output should include:
    - Reliability judgment and main risks for each source
-   - Which sources can be cited, which can only serve as线索, and which are not recommended for use
+   - Which sources can be cited, which can only serve as clues, and which are not recommended for use
    - Whether there are conflicts, reposting, content laundering, or common upstream between sources
    - Answer derived from reliable sources
    - Explanation of uncertainty when evidence is insufficient
@@ -187,7 +187,7 @@ This Skill has two output methods, each with different format requirements:
 2. A claim unsupported by authoritative primary sources, even if repeated by many secondary sources, cannot be considered multi-party independent verification.
 3. Official sources, papers, original regulations, standard documents, and project repositories typically have higher priority.
 4. "Multiple sources agree" is only valid cross-verification when at least one authoritative primary source exists, there is no republishing or content laundering between sources, and each source independently obtained information.
-5. Social platforms, forums, and self-media usually serve only as线索 and cannot independently support high-risk conclusions.
+5. Social platforms, forums, and self-media usually serve only as clues and cannot independently support high-risk conclusions.
 6. Cross-language reports that do not cite primary sources in the origin language should be automatically downgraded.
 7. Output results must explain the reasons, not just provide scores.
 
@@ -313,16 +313,16 @@ This Skill's role in this case:
 - Identified that the 905B claim primarily originated from Chinese media republishing chains, not from official or technical primary sources.
 - Determined that multiple republishing sources had highly overlapping content and cannot count as independent cross-verification.
 - Found that xAI / Hugging Face official repositories have not published Grok-2's parameter count, so no official confirmation of any number can be asserted.
-- Elevated the priority of stronger evidence sources: DataLearner, Unsloth, Ollama and other technical sources, based on open-source weights, model configurations, or metadata,指向 approximately 269B-270B total parameters.
+- Elevated the priority of stronger evidence sources: DataLearner, Unsloth, Ollama and other technical sources, based on open-source weights, model configurations, or metadata, pointing to approximately 269B-270B total parameters.
 
-This example demonstrates this Skill's core value: based on mixed search results, identifying republishing contamination, distinguishing primary sources from secondary dissemination, and排除 interference, transforming AI search from "it seems many sources say so" to "which sources truly support the conclusion."
+This example demonstrates this Skill's core value: based on mixed search results, identifying republishing contamination, distinguishing primary sources from secondary dissemination, and eliminating interference, transforming AI search from "it seems many sources say so" to "which sources truly support the conclusion."
 
 ## Known Limitations
 
 - This Skill primarily guides the Agent in analyzing and verifying already obtained search results, web links, or candidate sources; it does not guide the Agent in designing more effective proactive search strategies.
 - Effectiveness still depends on the quality of input sources. If the search tool returns poor sources with incomplete coverage or lacking primary sources, this Skill may still produce incorrect or incomplete conclusions. Therefore, for high-risk questions, prioritize better search tools and proactively supplement official, primary, regulatory, paper, standard, code repository, or original data sources.
-- This Skill can only perform preliminary assessment based on source type, source entity, article quality, timeliness, evidence chain, and conflict situations. Even if a source is relatively authoritative, it does not guarantee that its specific claims are correct; final judgment and decisions remain the user's responsibility. This Skill will尽可能 highlight notable risks for each source.
-- Professional domain rules for healthcare, legal, financial, education, e-commerce, etc., are currently primarily placeholders and general constraints. The author is not familiar with all细分 domains. Users should modify `rules/00_topic_registry.md` and corresponding `rules/source_<domain>.md` based on their own expertise.
+- This Skill can only perform preliminary assessment based on source type, source entity, article quality, timeliness, evidence chain, and conflict situations. Even if a source is relatively authoritative, it does not guarantee that its specific claims are correct; final judgment and decisions remain the user's responsibility. This Skill will highlight notable risks for each source whenever possible.
+- Professional domain rules for healthcare, legal, financial, education, e-commerce, etc., are currently primarily placeholders and general constraints. The author is not familiar with all specialized domains. Users should modify `rules/00_topic_registry.md` and corresponding `rules/source_<domain>.md` based on their own expertise.
 - When pages cannot be fetched, only preliminary assessment based on domain and known information is possible, which cannot replace full-text verification.
 
 ## Version

@@ -26,7 +26,7 @@ This Skill focuses on:
 
 ## ⚠️ Core Iron Law: Quantity ≠ Quality, Repetition ≠ Verification
 
-**This is the most important principle of this Skill,贯穿 all evaluation steps, and must never be violated.**
+**This is the most important principle of this Skill, runs through all evaluation steps, and must never be violated.**
 
 ```text
 A claim unsupported by authoritative sources cannot be considered "multi-party independent verification" no matter how many sources repeat it.
@@ -47,14 +47,14 @@ no matter how many of them there are or how consistent their claims are.
   2. There is no mutual citation, content laundering, or republishing relationship between the sources
   3. Each source independently obtained the information, not from the same upstream source
 
-Otherwise, "large quantity" is precisely a warning sign of content laundering/republishing/viral spread, not a credibility加分.
+Otherwise, "large quantity" is precisely a warning sign of content laundering/republishing/viral spread, not a credibility boost.
 ```
 
 ## Operation Modes
 
 ### Default Mode: Source Verification + Answer
 
-After verifying all sources, directly answer the user's question based on verified reliable sources. The output contains two parts: source evaluation report + answer based on reliable sources. The model may自行 determine how to organize the answer format.
+After verifying all sources, directly answer the user's question based on verified reliable sources. The output contains two parts: source evaluation report + answer based on reliable sources. The model may determine how to organize the answer format.
 
 ### Mark-Only Mode
 
@@ -78,7 +78,7 @@ This Skill should be invoked when the task involves:
    - Or sources manually submitted by the user via URLs or citations
    - Unify all sources into a to-be-verified list, without omitting any available source
 1. Read the user's original question, URL list, or search results. Often comes from prior retrieval or links directly provided by the user. First normalize the input to ensure correct URL format, extract key information such as domain and path. When multiple URLs exist, process each URL independently to generate a corresponding source evaluation report.
-1.5. **Use `rules/05_cross_region_verification.md` for cross-region/cross-language provenance analysis**: Determine the origin language of the information from the user's question (English-origin / Chinese-origin / Other),設定 subsequent evaluation's cross-language baseline. This step executes before evaluating each URL, and its output affects all cross-language penalty judgments in subsequent scoring rules, and provides echo chamber detection basis for the conflict resolution phase.
+1.5. **Use `rules/05_cross_region_verification.md` for cross-region/cross-language provenance analysis**: Determine the origin language of the information from the user's question (English-origin / Chinese-origin / Other), and set the cross-language baseline for subsequent evaluation. This step executes before evaluating each URL, and its output affects all cross-language penalty judgments in subsequent scoring rules, and provides echo chamber detection basis for the conflict resolution phase.
 2. Normalize each URL:
    - Remove tracking parameters such as `utm_*`
    - Identify the main domain
@@ -86,16 +86,16 @@ This Skill should be invoked when the task involves:
    - Check for redirects, mirrors, reposts, 404, etc.
 3. **When the page cannot be fetched normally** (including but not limited to: network timeout, transfer error, 403/404, returning only minimal text such as just a title, requiring login, page relying on JS rendering where plain text scraping fails to obtain valid content): do NOT skip the URL. Based on available information (domain, URL path structure, known domain background), provide a **preliminary assessment** while outputting detailed `warnings` clearly noting missing information. Preliminary assessment rules:
    - `source_type` can still be determined based on domain (e.g., `shlab.org.cn` is known to be the Shanghai AI Lab official website; even if it cannot be fetched, it belongs to `official`)
-   - `article_quality_score`: mark as无法评估, give minimum usable score with explanation
+   - `article_quality_score`: mark as unable to assess, give minimum usable score with explanation
    - `citation_usability`: default no higher than `use_with_caution`
    - `freshness`: mark as `unknown`
    - `warnings` must list each information item that could not be obtained (title, author, publication time, body excerpt, etc.) and the reason for inability to assess (e.g., "plain text fetch only returned title, unable to obtain body content," "target server connection timed out, no page content retrieved")
-   - `reasons` must note "preliminary assessment based on domain,未经 page content verification"
+   - `reasons` must note "preliminary assessment based on domain, without page content verification"
 3.5. **Reputation List Pre-check (Highest Priority)**: Before entering source classification and scoring, first read the following three reputation list files to check whether each URL's domain/entity/social account matches:
     - `rules/reputation_trusted.md` — Trusted sources list
     - `rules/reputation_unreliable.md` — Untrustworthy sources list
     - `rules/reputation_disputed.md` — Disputed sources list
-    Sources that match a list directly follow the list rules for `source_reliability_score` and `citation_usability`, **skipping the detailed rule-by-rule checks in step 6** (article quality scoring and timeliness still need independent evaluation). List priority: trusted > disputed > unreliable (if matching multiple, highest priority prevails). All three files are maintained by the user and Agent together, supporting fine-grained custom extensions down to specific social accounts. Sources not matching any list proceed normally through the后续流程.
+    Sources that match a list directly follow the list rules for `source_reliability_score` and `citation_usability`, **skipping the detailed rule-by-rule checks in step 6** (article quality scoring and timeliness still need independent evaluation). List priority: trusted > disputed > unreliable (if matching multiple, highest priority prevails). All three files are maintained by the user and Agent together, supporting fine-grained custom extensions down to specific social accounts. Sources not matching any list proceed normally through the subsequent workflow.
 4. Use `rules/00_source_taxonomy.md` to determine source type.
 5. Use `rules/01_general_scoring.md` for general scoring.
 6. For **sources not matching the reputation list**, load corresponding rules based on source type. Carefully check all rule files in the `rules/` directory — not just those listed below:
@@ -107,8 +107,8 @@ This Skill should be invoked when the task involves:
    - Blog/forum → `rules/source_blog_forum.md`
    - Suspicious sources → `rules/source_suspicious.md`
    - E-commerce platforms → `rules/source_commerce.md`
-6.5. **Missed Entries Review**: After completing the evaluation of all sources, go back and check whether any sources should have matched the reputation list but were missed (e.g., domain matched but未识别, social account aliases not included). If omissions are found, add them to the corresponding list file to ensure they are not missed next time.
-7. Read `rules/00_topic_registry.md`. Based on topics covered in the user's question (such as AI/tech, healthcare, law/policy), load the corresponding topic-specific rule files from the registry for叠加 evaluation. The registry supports user custom extensions; see the registry file for details.
+6.5. **Missed Entries Review**: After completing the evaluation of all sources, go back and check whether any sources should have matched the reputation list but were missed (e.g., domain matched but was not recognized, social account aliases not included). If omissions are found, add them to the corresponding list file to ensure they are not missed next time.
+7. Read `rules/00_topic_registry.md`. Based on topics covered in the user's question (such as AI/tech, healthcare, law/policy), load the corresponding topic-specific rule files from the registry for overlay evaluation. The registry supports user custom extensions; see the registry file for details.
 8. Use `rules/03_freshness.md` to determine whether the source is outdated.
 9. Use `rules/04_conflict_resolution.md` to resolve source conflicts.
 10. Output a report conforming to `schemas/source_report.schema.json`.
